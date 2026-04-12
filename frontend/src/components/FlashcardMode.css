@@ -1,0 +1,270 @@
+/* FlashcardMode.css */
+
+.flashcard-mode { display: flex; flex-direction: column; gap: 22px; }
+
+/* ── Top bar ── */
+.fc-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.fc-progress-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.fc-counter {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.fc-seen {
+  font-size: 12px;
+  color: var(--text-muted);
+  background: var(--bg-subtle);
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  font-weight: 300;
+}
+
+/* ── 3D flip card ── */
+.fc-card-wrap {
+  perspective: 1000px;
+  cursor: pointer;
+  user-select: none;
+  min-height: 300px;
+}
+
+.fc-card {
+  position: relative;
+  width: 100%;
+  min-height: 300px;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
+  border-radius: var(--r-xl);
+}
+
+.fc-card.flipped { transform: rotateY(180deg); }
+
+.fc-face {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--r-xl);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 32px 36px;
+  min-height: 300px;
+  border: 1px solid var(--border);
+}
+
+/* Front */
+.fc-front {
+  background: var(--bg-card);
+  justify-content: space-between;
+  box-shadow: var(--shadow-md);
+}
+
+.fc-face-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+
+.fc-face-label span:first-child { color: var(--accent); }
+
+.fc-flip-hint {
+  color: var(--text-dim) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.3px !important;
+}
+
+.fc-front-text {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+  letter-spacing: -0.3px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.fc-card-num {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  font-family: var(--font-display);
+  align-self: flex-end;
+}
+.fc-num-big   { font-size: 36px; font-weight: 700; color: var(--border); line-height: 1; }
+.fc-num-sep   { font-size: 20px; color: var(--text-dim); margin: 0 3px; }
+.fc-num-total { font-size: 20px; color: var(--text-dim); }
+
+/* Back */
+.fc-back {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: rotateY(180deg);
+  box-shadow: var(--shadow-accent);
+  justify-content: space-between;
+}
+
+.fc-back .fc-face-label span:first-child { color: rgba(255,255,255,0.65); }
+.fc-back .fc-flip-hint { color: rgba(255,255,255,0.4) !important; }
+
+.fc-back-text {
+  font-size: 16px;
+  color: rgba(255,255,255,0.95);
+  line-height: 1.8;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+  font-weight: 300;
+  white-space: pre-line;
+}
+
+.fc-seen-mark {
+  font-size: 11px;
+  color: rgba(255,255,255,0.6);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  align-self: flex-end;
+  text-transform: uppercase;
+}
+
+/* ── Tap hint ── */
+.fc-tap-hint {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: -8px;
+  font-weight: 300;
+}
+
+/* ── Navigation ── */
+.fc-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.fc-dots {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex: 1;
+}
+
+.fc-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--border);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+.fc-dot:hover { background: var(--text-dim); transform: scale(1.3); }
+.fc-dot.fc-dot-seen    { background: rgba(61,107,79,0.35); }
+.fc-dot.fc-dot-current { background: var(--accent); width: 20px; border-radius: 4px; }
+
+/* ── Completion banner ── */
+.fc-complete {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  border-color: var(--success);
+  background: var(--success-bg);
+}
+
+.fc-complete-icon { font-size: 26px; flex-shrink: 0; }
+.fc-complete-text { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.fc-complete-text strong { font-size: 15px; color: var(--success); }
+.fc-complete-text span   { font-size: 13px; color: var(--text-muted); font-weight: 300; }
+
+/* ── Card overview ── */
+.fc-overview {}
+
+.fc-overview-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.fc-list { display: flex; flex-direction: column; gap: 7px; }
+
+.fc-list-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-size: 13px;
+}
+
+.fc-list-item:hover { border-color: var(--border); background: var(--bg-subtle); }
+.fc-list-item.fc-list-current { border-color: var(--accent); background: var(--accent-light); }
+.fc-list-item.fc-list-seen { opacity: 0.65; }
+
+.fc-list-num {
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  border-radius: 5px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.fc-list-current .fc-list-num {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.fc-list-front {
+  flex: 1;
+  color: var(--text);
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fc-list-check { flex-shrink: 0; font-size: 12px; color: var(--success); font-weight: 600; }
+
+@media (max-width: 600px) {
+  .fc-front-text { font-size: 22px; }
+  .fc-back-text  { font-size: 14px; }
+  .fc-card-wrap, .fc-card, .fc-face { min-height: 260px; }
+  .fc-nav .btn { padding: 10px 14px; font-size: 13px; }
+}
