@@ -6,7 +6,9 @@ import QuizMode from './components/QuizMode.jsx'
 import FlashcardMode from './components/FlashcardMode.jsx'
 import ResultsPage from './components/ResultsPage.jsx'
 
-const API_BASE = '/api'
+const API_BASE =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV ? '/api' : 'https://quiz-app-backend-oinn.onrender.com/api')
 
 export default function App() {
   const [page, setPage] = useState('landing')

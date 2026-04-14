@@ -25,6 +25,17 @@ export default function UploadPage({ apiBase, onQuizReady, onFlashcardsReady }) 
     if (f) { setFile(f); setError(''); setMode(null) }
   }
 
+  const parseApiResponse = async (res) => {
+    const contentType = res.headers.get('content-type') || ''
+
+    if (contentType.includes('application/json')) {
+      return await res.json()
+    }
+
+    const text = await res.text()
+    throw new Error(text || `Request failed with status ${res.status}`)
+  }
+
   const handleGenerateQuiz = async () => {
     if (!file) return
     setError(''); setLoading(true)
@@ -33,7 +44,7 @@ export default function UploadPage({ apiBase, onQuizReady, onFlashcardsReady }) 
       const fd = new FormData()
       fd.append('file', file); fd.append('numQuestions', numQuestions); fd.append('difficulty', difficulty)
       const res = await fetch(`${apiBase}/generate-quiz`, { method: 'POST', body: fd })
-      const data = await res.json()
+      const data = await parseApiResponse(res)
       if (!res.ok) throw new Error(data.error || 'Failed to generate quiz')
       if (!data.questions?.length) throw new Error('No questions returned. Try again.')
       onQuizReady(data.questions)
@@ -48,7 +59,7 @@ export default function UploadPage({ apiBase, onQuizReady, onFlashcardsReady }) 
     try {
       const fd = new FormData(); fd.append('file', file)
       const res = await fetch(`${apiBase}/generate-flashcards`, { method: 'POST', body: fd })
-      const data = await res.json()
+      const data = await parseApiResponse(res)
       if (!res.ok) throw new Error(data.error || 'Failed to generate flashcards')
       if (!data.flashcards?.length) throw new Error('No flashcards returned. Try again.')
       onFlashcardsReady(data.flashcards)
