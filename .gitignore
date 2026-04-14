@@ -10,6 +10,7 @@ backend/.project
 backend/.settings/
 backend/.idea/
 backend/*.iml
+backend/src/main/resources/application.properties
 
 # IDEs
 .vscode/

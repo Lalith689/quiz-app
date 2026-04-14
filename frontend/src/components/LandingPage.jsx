@@ -12,14 +12,14 @@ export default function LandingPage({ onStart }) {
           </div>
           <span>Study Companion</span>
         </div>
-        <span className="landing-badge">CS2024 · Sem IV</span>
+        <span className="landing-badge">Quizs · Flashcards</span>
       </header>
 
       <section className="landing-hero">
         <div className="hero-content">
           <div className="hero-eyebrow">
             <span className="eyebrow-dot" />
-            Powered by Gemini AI
+            Made with Java
           </div>
 
           <h1 className="hero-title">
@@ -71,9 +71,9 @@ export default function LandingPage({ onStart }) {
             <div className="fc-score-label">Quiz score</div>
           </div>
 
-          <div className="float-pill float-pill-1">Method Overriding</div>
-          <div className="float-pill float-pill-2">Encapsulation</div>
-          <div className="float-pill float-pill-3">Try-Catch</div>
+          <div className="float-pill float-pill-1">Wrong</div>
+          <div className="float-pill float-pill-2">Correct</div>
+          <div className="float-pill float-pill-3">Memorize</div>
         </div>
       </section>
 
