@@ -35,7 +35,7 @@ export default function App() {
             </div>
             <h1>Study Companion</h1>
           </div>
-          <span className="header-badge">CS2024 · Sem IV</span>
+          <span className="header-badge">Quizs · Flashcards</span>
         </header>
       )}
 
