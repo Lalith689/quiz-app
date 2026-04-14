@@ -268,3 +268,19 @@
   .fc-card-wrap, .fc-card, .fc-face { min-height: 260px; }
   .fc-nav .btn { padding: 10px 14px; font-size: 13px; }
 }
+
+/* ── SVG icon wrappers ── */
+.fc-complete-icon-wrap {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: var(--success-bg);
+  border: 1px solid rgba(61,107,79,0.2);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Fix result-badge flex alignment */
+.result-badge { display: inline-flex; align-items: center; gap: 4px; }
+
+/* Fix explanation label flex */
+.explanation-label { display: flex; align-items: center; gap: 6px; }

@@ -1,78 +1,54 @@
 import { useState } from 'react'
+import Icon from './components/Icons.jsx'
+import LandingPage from './components/LandingPage.jsx'
 import UploadPage from './components/UploadPage.jsx'
 import QuizMode from './components/QuizMode.jsx'
 import FlashcardMode from './components/FlashcardMode.jsx'
 import ResultsPage from './components/ResultsPage.jsx'
 
-const API_BASE = import.meta.env.VITE_API_URL || '/api'
+const API_BASE = '/api'
 
 export default function App() {
-  const [page, setPage] = useState('upload')
+  const [page, setPage] = useState('landing')
   const [questions, setQuestions] = useState([])
   const [flashcards, setFlashcards] = useState([])
   const [userAnswers, setUserAnswers] = useState([])
 
-  const handleQuizReady = (qs) => {
-    setQuestions(qs)
-    setPage('quiz')
-  }
-
-  const handleFlashcardsReady = (fc) => {
-    setFlashcards(fc)
-    setPage('flashcards')
-  }
-
-  const handleQuizComplete = (answers) => {
-    setUserAnswers(answers)
-    setPage('results')
-  }
-
-  const handleReset = () => {
-    setPage('upload')
+  const goHome = () => {
+    setPage('landing')
     setQuestions([])
     setFlashcards([])
     setUserAnswers([])
   }
 
+  const handleQuizReady       = (qs)  => { setQuestions(qs);   setPage('quiz') }
+  const handleFlashcardsReady = (fc)  => { setFlashcards(fc);  setPage('flashcards') }
+  const handleQuizComplete    = (ans) => { setUserAnswers(ans); setPage('results') }
+
   return (
     <div className="app">
-      <header className="app-header">
-        <button className="logo" onClick={handleReset} style={{background:'none',border:'none',cursor:'pointer'}}>
-          <div className="logo-icon">☕</div>
-          <h1>Study Companion</h1>
-        </button>
-        <span className="badge">Quiz · Flashcards</span>
-      </header>
+      {page !== 'landing' && (
+        <header className="app-header">
+          <div className="logo" onClick={goHome} title="Go to home">
+            <div className="logo-icon">
+              <Icon name="coffee" size={18} color="#fff" strokeWidth={1.8} />
+            </div>
+            <h1>Study Companion</h1>
+          </div>
+          <span className="header-badge">CS2024 · Sem IV</span>
+        </header>
+      )}
 
-      <main>
-        {page === 'upload' && (
-          <UploadPage
-            apiBase={API_BASE}
-            onQuizReady={handleQuizReady}
-            onFlashcardsReady={handleFlashcardsReady}
-          />
-        )}
-        {page === 'quiz' && (
-          <QuizMode
-            questions={questions}
-            onComplete={handleQuizComplete}
-            onBack={handleReset}
-          />
-        )}
-        {page === 'flashcards' && (
-          <FlashcardMode
-            flashcards={flashcards}
-            onBack={handleReset}
-          />
-        )}
-        {page === 'results' && (
-          <ResultsPage
-            questions={questions}
-            userAnswers={userAnswers}
-            onReset={handleReset}
-          />
-        )}
-      </main>
+      {page === 'landing' && <LandingPage onStart={() => setPage('upload')} />}
+
+      {page !== 'landing' && (
+        <main>
+          {page === 'upload'     && <UploadPage apiBase={API_BASE} onQuizReady={handleQuizReady} onFlashcardsReady={handleFlashcardsReady} />}
+          {page === 'quiz'       && <QuizMode questions={questions} onComplete={handleQuizComplete} onBack={() => setPage('upload')} />}
+          {page === 'flashcards' && <FlashcardMode flashcards={flashcards} onBack={() => setPage('upload')} />}
+          {page === 'results'    && <ResultsPage questions={questions} userAnswers={userAnswers} onReset={goHome} />}
+        </main>
+      )}
     </div>
   )
 }

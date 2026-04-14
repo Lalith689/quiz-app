@@ -116,17 +116,10 @@ body {
   gap: 11px;
   text-decoration: none;
   cursor: pointer;
-  transition: all 0.2s ease;
-  border-radius: 8px;
-  padding: 4px 8px;
-  margin-left: -8px;
+  transition: opacity 0.2s;
 }
 
-.app-header .logo:hover { 
-  opacity: 0.85;
-  background: rgba(248, 152, 32, 0.08);
-  transform: translateY(-1px);
-}
+.app-header .logo:hover { opacity: 0.72; }
 
 .logo-icon {
   width: 34px;

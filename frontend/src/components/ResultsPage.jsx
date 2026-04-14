@@ -1,3 +1,4 @@
+import Icon from './Icons.jsx'
 import './ResultsPage.css'
 
 export default function ResultsPage({ questions, userAnswers, onReset }) {
@@ -6,10 +7,10 @@ export default function ResultsPage({ questions, userAnswers, onReset }) {
   const pct = Math.round((correct / total) * 100)
 
   const getGrade = () => {
-    if (pct >= 90) return { label: 'Excellent!',      icon: '🏆', color: 'var(--success)' }
-    if (pct >= 70) return { label: 'Good Job!',       icon: '🎯', color: 'var(--warm)' }
-    if (pct >= 50) return { label: 'Keep Practicing', icon: '📖', color: 'var(--neutral)' }
-    return              { label: 'Needs Revision',   icon: '💪', color: 'var(--error)' }
+    if (pct >= 90) return { label: 'Excellent',      icon: 'award',   color: 'var(--success)' }
+    if (pct >= 70) return { label: 'Good Job',        icon: 'trending',color: 'var(--warm)' }
+    if (pct >= 50) return { label: 'Keep Practicing', icon: 'book',    color: 'var(--neutral)' }
+    return              { label: 'Needs Revision',   icon: 'repeat',  color: 'var(--error)' }
   }
 
   const grade = getGrade()
@@ -22,7 +23,7 @@ export default function ResultsPage({ questions, userAnswers, onReset }) {
         <div className="score-header">
           <span className="score-eyebrow">Quiz Results</span>
           <div className="score-grade" style={{color: grade.color}}>
-            <span>{grade.icon}</span>
+            <Icon name={grade.icon} size={16} color={grade.color} strokeWidth={1.8} />
             <span>{grade.label}</span>
           </div>
         </div>
@@ -37,8 +38,12 @@ export default function ResultsPage({ questions, userAnswers, onReset }) {
             <div className="progress-fill" style={{width:`${pct}%`, background: grade.color}} />
           </div>
           <div className="score-stats">
-            <span style={{color:'var(--success)'}}>✓ {correct} correct</span>
-            <span style={{color:'var(--error)'}}>✗ {total - correct} wrong</span>
+            <span style={{color:'var(--success)', display:'flex', alignItems:'center', gap:5}}>
+              <Icon name="check" size={13} color="var(--success)" strokeWidth={2.5}/> {correct} correct
+            </span>
+            <span style={{color:'var(--error)', display:'flex', alignItems:'center', gap:5}}>
+              <Icon name="x" size={13} color="var(--error)" strokeWidth={2.5}/> {total - correct} wrong
+            </span>
           </div>
         </div>
       </div>
@@ -47,21 +52,24 @@ export default function ResultsPage({ questions, userAnswers, onReset }) {
         <p className="breakdown-label">Question breakdown</p>
         {questions.map((q, i) => {
           const userAnswer = userAnswers[i]
-          const isCorrect = userAnswer === q.correctAnswer
+          const isCorrect  = userAnswer === q.correctAnswer
           return (
             <div key={i} className={`result-item card ${isCorrect ? 'result-correct' : 'result-wrong'}`}>
               <div className="result-header">
                 <span className="result-num">Q{i + 1}</span>
                 <span className={`result-badge ${isCorrect ? 'badge-correct' : 'badge-wrong'}`}>
-                  {isCorrect ? '✓ Correct' : '✗ Incorrect'}
+                  {isCorrect
+                    ? <><Icon name="check" size={11} color="var(--success)" strokeWidth={2.5}/> Correct</>
+                    : <><Icon name="x"     size={11} color="var(--error)"   strokeWidth={2.5}/> Incorrect</>
+                  }
                 </span>
               </div>
               <p className="result-question">{q.question}</p>
               <div className="result-options">
                 {q.options.map((option) => {
-                  const letter = getLetter(option)
-                  const isUserAns  = letter === userAnswer
-                  const isRight    = letter === q.correctAnswer
+                  const letter   = getLetter(option)
+                  const isUserAns = letter === userAnswer
+                  const isRight   = letter === q.correctAnswer
                   let cls = 'result-option'
                   if (isRight) cls += ' option-right'
                   else if (isUserAns && !isCorrect) cls += ' option-user-wrong'
@@ -70,7 +78,7 @@ export default function ResultsPage({ questions, userAnswers, onReset }) {
                       <span className="result-option-letter">{letter}</span>
                       <span className="result-option-text">{option.substring(3)}</span>
                       <span className="result-option-tag">
-                        {isRight    && <span className="tag-correct">{isUserAns ? 'Your answer ✓' : '✓ Correct'}</span>}
+                        {isRight    && <span className="tag-correct">{isUserAns ? 'Your answer ✓' : 'Correct'}</span>}
                         {isUserAns && !isRight && <span className="tag-wrong">Your answer</span>}
                       </span>
                     </div>
@@ -78,7 +86,10 @@ export default function ResultsPage({ questions, userAnswers, onReset }) {
                 })}
               </div>
               <div className="result-explanation">
-                <div className="explanation-label">💡 Explanation</div>
+                <div className="explanation-label">
+                  <Icon name="lightbulb" size={12} color="var(--accent)" strokeWidth={1.8} />
+                  Explanation
+                </div>
                 <p className="explanation-text">{q.explanation}</p>
               </div>
             </div>

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Icon from './Icons.jsx'
 import './FlashcardMode.css'
 
 export default function FlashcardMode({ flashcards, onBack }) {
@@ -7,7 +8,7 @@ export default function FlashcardMode({ flashcards, onBack }) {
   const [seen, setSeen] = useState(new Set())
 
   const total = flashcards.length
-  const card = flashcards[current]
+  const card  = flashcards[current]
 
   const handleFlip = () => {
     setFlipped(!flipped)
@@ -21,7 +22,9 @@ export default function FlashcardMode({ flashcards, onBack }) {
   return (
     <div className="flashcard-mode fade-up">
       <div className="fc-topbar">
-        <button className="btn btn-ghost" onClick={onBack}>← Back</button>
+        <button className="btn btn-ghost" onClick={onBack}>
+          <Icon name="chevronLeft" size={16} color="var(--text-muted)" strokeWidth={2} /> Back
+        </button>
         <div className="fc-progress-info">
           <span className="fc-counter">{current + 1} / {total}</span>
           <span className="fc-seen">{seen.size} seen</span>
@@ -75,7 +78,9 @@ export default function FlashcardMode({ flashcards, onBack }) {
 
       {seen.size === total && (
         <div className="fc-complete card fade-up">
-          <div className="fc-complete-icon">🎉</div>
+          <div className="fc-complete-icon-wrap">
+            <Icon name="sparkle" size={22} color="var(--success)" strokeWidth={1.4} />
+          </div>
           <div className="fc-complete-text">
             <strong>All cards reviewed!</strong>
             <span>You've gone through all {total} flashcards.</span>
@@ -95,7 +100,11 @@ export default function FlashcardMode({ flashcards, onBack }) {
             >
               <div className="fc-list-num">{i + 1}</div>
               <div className="fc-list-front">{fc.front}</div>
-              {seen.has(i) && <span className="fc-list-check">✓</span>}
+              {seen.has(i) && (
+                <span className="fc-list-check">
+                  <Icon name="check" size={12} color="var(--success)" strokeWidth={2.5} />
+                </span>
+              )}
             </div>
           ))}
         </div>

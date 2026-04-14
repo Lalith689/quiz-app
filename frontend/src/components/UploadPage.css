@@ -398,3 +398,50 @@
   .features-grid { grid-template-columns: 1fr; }
   .diff-desc { display: none; }
 }
+
+/* ── SVG icon wrappers ── */
+.drop-icon-wrap {
+  width: 56px; height: 56px;
+  border-radius: 16px;
+  background: var(--accent-light);
+  border: 1px solid rgba(61,107,79,0.15);
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.drop-zone:hover .drop-icon-wrap { background: rgba(61,107,79,0.15); }
+
+.file-icon-wrap {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  background: var(--warm-light);
+  border: 1px solid rgba(184,107,47,0.15);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.mode-icon-wrap {
+  width: 46px; height: 46px;
+  background: var(--bg-subtle);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.18s;
+  border: 1px solid var(--border-soft);
+}
+.mode-card.selected .mode-icon-wrap { background: var(--accent-light); border-color: rgba(61,107,79,0.2); }
+
+.feature-box-icon-wrap {
+  width: 34px; height: 34px;
+  background: var(--accent-light);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid rgba(61,107,79,0.12);
+}
+
+/* Replace emoji difficulty dot with CSS dot */
+.diff-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
